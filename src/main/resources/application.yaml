@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: person
+  config:
+    import: "configserver:${CONFIG_SERVER_URL}"
+
