@@ -11,8 +11,7 @@
 ---
 
 ## Flujo del funcionamiento
-<img width="1484" height="596" alt="image" src="https://github.com/user-attachments/assets/d550b698-2a96-4d50-9b13-c83088e98ddf" />
-
+<img width="1476" height="591" alt="image" src="https://github.com/user-attachments/assets/9637d9aa-f4c9-4d37-ba08-bf6d0fd28d1c" />
 
 1. **Peticion HTTP GET:** El cliente realiza una peticion `HTTP POST` para crear una nueva persona (actor)
 2. **Controller:** El Controller recibe la peticion y le redirige la logica de negocio al `Persons Service`
@@ -31,7 +30,7 @@
 > Gracias a la documentacion de OpenAPI y el refuerzo de las herramientas de Swagger tenemos un vistazo en detalle sobre los endpoints, parametros, respuestas, modelos, etc.
 > 
 > Para ello solo debemos escribir en el navegador `IP DE PERSONS-SERVICE:PORT/swagger-ui.html`
-<img width="1476" height="591" alt="image" src="https://github.com/user-attachments/assets/4d7b176b-7c55-4b28-bf34-9aaa6d8e0584" />
+<img width="1845" height="901" alt="image" src="https://github.com/user-attachments/assets/7ebb8d41-1c87-4776-ba7d-3b93950dd587" />
 
 ---
 
