@@ -31,7 +31,7 @@
 > Gracias a la documentacion de OpenAPI y el refuerzo de las herramientas de Swagger tenemos un vistazo en detalle sobre los endpoints, parametros, respuestas, modelos, etc.
 > 
 > Para ello solo debemos escribir en el navegador `IP DE PERSONS-SERVICE:PORT/swagger-ui.html`
-<img width="1845" height="901" alt="image" src="https://github.com/user-attachments/assets/7ebb8d41-1c87-4776-ba7d-3b93950dd587" />
+<img width="1476" height="591" alt="image" src="https://github.com/user-attachments/assets/4d7b176b-7c55-4b28-bf34-9aaa6d8e0584" />
 
 ---
 
