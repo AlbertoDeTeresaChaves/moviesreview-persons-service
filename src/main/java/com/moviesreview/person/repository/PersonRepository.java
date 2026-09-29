@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PersonRepository extends MongoRepository<Person, ObjectId> {
+public interface PersonRepository extends MongoRepository<Person, String> {
     Optional<Person> findBySlug(String slug);
     boolean existsBySlug(String slug);
 }

@@ -6,6 +6,7 @@ import com.moviesreview.person.dto.PersonRequestDto;
 import com.moviesreview.person.dto.PersonResponseDto;
 import com.moviesreview.person.dto.ResponseDto;
 import com.moviesreview.person.mapper.PersonMapper;
+import com.moviesreview.person.service.IPersonService;
 import com.moviesreview.person.service.impl.PersonServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,12 +30,18 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "CRUD Rest API for Person Microservices")
 public class PersonController {
 
-    private final PersonServiceImpl personService;
+    private final IPersonService personService;
 
     @Operation(summary = "Create Person", description = "API Restful to create person")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",description = "HTTP Status CREATED",content =
                 @Content(schema = @Schema(implementation = PersonResponseDto.class))
+            ),
+            @ApiResponse(responseCode = "400",description = "HTTP Status BAD_REQUEST",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
+            ),
+            @ApiResponse(responseCode = "409",description = "HTTP Status CONFLICT",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
             ),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL SERVER ERROR",content =
                 @Content(schema = @Schema(implementation = ErrorResponseDto.class))
@@ -51,6 +58,9 @@ public class PersonController {
             @ApiResponse(responseCode = "200",description = "HTTP Status OK",content =
                 @Content(schema = @Schema(implementation = PersonResponseDto.class))
             ),
+            @ApiResponse(responseCode = "400",description = "HTTP Status BAD_REQUEST",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
+            ),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL SERVER ERROR",content =
             @Content(schema = @Schema(implementation = ErrorResponseDto.class))
             )
@@ -66,13 +76,35 @@ public class PersonController {
             @ApiResponse(responseCode = "200",description = "HTTP Status OK",content =
             @Content(schema = @Schema(implementation = PersonResponseDto.class))
             ),
+            @ApiResponse(responseCode = "404",description = "HTTP Status NOT_FOUND",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
+            ),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL SERVER ERROR",content =
             @Content(schema = @Schema(implementation = ErrorResponseDto.class))
             )
     })
     @GetMapping("/{slug}")
-    public ResponseEntity<PersonResponseDto> fetchPersonDetails(@PathVariable String slug){
+    public ResponseEntity<PersonResponseDto> fetchPersonDetailsBySlug(@PathVariable String slug){
         PersonResponseDto result = PersonMapper.toDto(personService.fetchBySlug(slug));
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @Operation(summary = "Fetch Person Details By ID", description = "API Restful to fetch person details based on slug")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "HTTP Status OK",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
+            ),
+            @ApiResponse(responseCode = "404",description = "HTTP Status NOT_FOUND",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
+            ),
+            @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL SERVER ERROR",content =
+            @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+    })
+    @GetMapping("/id/{id}")
+    public ResponseEntity<PersonResponseDto> fetchPersonDetailsById(@PathVariable String id){
+        PersonResponseDto result = PersonMapper.toDto(personService.fetchById(id));
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
@@ -80,6 +112,12 @@ public class PersonController {
     @Operation(summary = "Update Persons Details", description = "API Restful to update person details based on slug")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "HTTP Status OK",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
+            ),
+            @ApiResponse(responseCode = "400",description = "HTTP Status BAD_REQUEST",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
+            ),
+            @ApiResponse(responseCode = "404",description = "HTTP Status NOT_FOUND",content =
             @Content(schema = @Schema(implementation = PersonResponseDto.class))
             ),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL SERVER ERROR",content =
@@ -95,8 +133,11 @@ public class PersonController {
 
     @Operation(summary = "Delete Person", description = "API Restful to delete person based on slug")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204",description = "HTTP Status NO CONTENT",content =
+            @ApiResponse(responseCode = "200",description = "HTTP Status OK",content =
             @Content(schema = @Schema(implementation = ResponseDto.class))
+            ),
+            @ApiResponse(responseCode = "404",description = "HTTP Status NOT_FOUND",content =
+            @Content(schema = @Schema(implementation = PersonResponseDto.class))
             ),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL SERVER ERROR",content =
             @Content(schema = @Schema(implementation = ErrorResponseDto.class))
@@ -105,6 +146,6 @@ public class PersonController {
     @DeleteMapping("/{slug}")
     public ResponseEntity<ResponseDto> deletePerson (@PathVariable String slug){
         personService.delete(slug);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDto(HttpStatus.NO_CONTENT, PersonConstants.PERSON_DELETED));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(HttpStatus.OK,PersonConstants.PERSON_DELETED));
     }
 }

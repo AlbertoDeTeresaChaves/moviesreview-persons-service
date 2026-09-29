@@ -11,6 +11,7 @@ public interface IPersonService {
     PersonResponseDto create (PersonRequestDto request);
     Page<PersonResponseDto> fetchAll(Pageable pageable);
     Person fetchBySlug(String slug);
+    Person fetchById(String id);
     PersonResponseDto update(String slug, PersonRequestDto request);
     void delete(String slug);
 }

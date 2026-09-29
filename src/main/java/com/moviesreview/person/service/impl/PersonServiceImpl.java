@@ -61,9 +61,18 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional(readOnly = true)
     public Person fetchBySlug(String slug) {
-        log.info("Trying to find Person by ID: {}", slug);
+        log.info("Trying to find Person by slug: {}", slug);
         return personRepository.findBySlug(slug).orElseThrow(
                 () -> new ResourceNotFoundException("Person","slug",slug)
+        );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person fetchById(String id){
+        log.info("Trying to find Person by ID: {}",id);
+        return personRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Person","id",id)
         );
     }
 
